@@ -21,9 +21,48 @@ Or install it yourself as:
 ## Usage
 
 ```ruby
+# Sinatra
+require 'omniauth-esa'
 use OmniAuth::Builder do
   provider :esa, ENV['ESA_CLIENT_ID'], ENV['ESA_CLIENT_SECRET'], scope: 'read write'
 end
+
+# Rails
+Rails.application.config.middleware.use OmniAuth::Builder do
+  provider :esa, ENV['ESA_CLIENT_ID'], ENV['ESA_CLIENT_SECRET'], scope: 'read write'
+end
+```
+
+## Auth Hash
+
+Here's an example *Auth Hash* available in `request.env['omniauth.auth']`:
+
+```ruby
+{
+  "provider": "esa",
+  "uid": 1,
+  "info": {
+    "nickname": "fukayatsu",
+    "name": "Atsuo Fukaya",
+    "email": "fukayatsu@esa.io",
+    "image": "https://img.esa.io/uploads/production/users/1/icon/thumb_m_402685a258cf2a33c1d6c13a89adec92.png"
+  },
+  "credentials": {
+    "token": "1a2b3c....",
+    "expires": false
+  },
+  "extra": {
+    "raw_info": {
+      "id": 1,
+      "name": "Atsuo Fukaya",
+      "screen_name": "fukayatsu",
+      "created_at": "2014-05-10T11:50:07+09:00",
+      "updated_at": "2016-04-17T15:36:43+09:00",
+      "icon": "https://img.esa.io/uploads/production/users/1/icon/thumb_m_402685a258cf2a33c1d6c13a89adec92.png",
+      "email": "fukayatsu@esa.io"
+    }
+  }
+}
 ```
 
 ## Development
